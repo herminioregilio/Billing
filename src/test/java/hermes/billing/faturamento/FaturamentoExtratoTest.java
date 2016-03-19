@@ -7,10 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import hermes.billing.core.Dinheiro;
 import hermes.billing.financeiro.lancamento.Lancamento;
 import junit.framework.Assert;
 
@@ -23,8 +21,8 @@ public class FaturamentoExtratoTest {
 	
 	@Before
 	public void before() {
-		Mockito.when(lancamento1.getValor()).thenReturn(new Dinheiro(1));
-		Mockito.when(lancamento2.getValor()).thenReturn(new Dinheiro(2));
+	//	Mockito.when(lancamento1.getValor()).thenReturn(new Dinheiro(1));
+	//	Mockito.when(lancamento2.getValor()).thenReturn(new Dinheiro(2));
 		lancamentos.add(lancamento1);
 	}
 	

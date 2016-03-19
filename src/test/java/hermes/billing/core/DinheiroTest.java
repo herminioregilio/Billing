@@ -2,13 +2,12 @@ package hermes.billing.core;
 
 import org.junit.Test;
 
-import hermes.billing.core.Dinheiro;
 import junit.framework.Assert;
 
 public class DinheiroTest {
 
 	@Test
-	public void arredondaParaBaixo() {
+	public void arredondaParaBaixo() {		
 		Dinheiro subject = new Dinheiro(1.104);
 		Assert.assertEquals("valor", 1.10,  subject.getValor());
 		subject = new Dinheiro(1.105);

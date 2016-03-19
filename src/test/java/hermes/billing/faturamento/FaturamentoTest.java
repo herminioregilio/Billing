@@ -2,7 +2,6 @@ package hermes.billing.faturamento;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
 
 import java.util.List;
 
@@ -13,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import hermes.billing.core.Dinheiro;
 import hermes.billing.financeiro.lancamento.Faturavel;
 import hermes.billing.financeiro.lancamento.Lancamento;
 import hermes.billing.financeiro.lancamento.LancamentoFaturamento;
@@ -31,9 +29,9 @@ public class FaturamentoTest {
 	
 	@Test
 	public void executa_paraFaturaveis_geraFaturamentoExtrato() {
-		when(faturavel1.getValorFaturamento()).thenReturn(new Dinheiro(1));
-		when(faturavel2.getValorFaturamento()).thenReturn(new Dinheiro(2));
-		
+//		when(faturavel1.getValorFaturamento()).thenReturn(new Dinheiro(1));
+//		when(faturavel2.getValorFaturamento()).thenReturn(new Dinheiro(2));
+//		
 		subject.addFaturaveis(faturavel1);
 		subject.addFaturaveis(faturavel2);
 		
