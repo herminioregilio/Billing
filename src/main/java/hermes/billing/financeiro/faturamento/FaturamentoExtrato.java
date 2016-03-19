@@ -1,9 +1,11 @@
-package hermes.billing.faturamento;
+package hermes.billing.financeiro.faturamento;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.money.MonetaryAmount;
+
+import org.javamoney.moneta.Money;
 
 import hermes.billing.financeiro.lancamento.Lancamento;
 
@@ -13,7 +15,7 @@ public class FaturamentoExtrato {
 	private MonetaryAmount valorAReceber;
 	
 	public FaturamentoExtrato(List<Lancamento> lancamentos) {	
-		
+		valorAReceber = Money.of(0, "BRL");
 		for (Lancamento lancamento : lancamentos) 
 			addLancamento(lancamento);
 	}

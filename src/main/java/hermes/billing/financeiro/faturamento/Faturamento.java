@@ -1,4 +1,4 @@
-package hermes.billing.faturamento;
+package hermes.billing.financeiro.faturamento;
 
 import java.util.ArrayList;
 import java.util.List;

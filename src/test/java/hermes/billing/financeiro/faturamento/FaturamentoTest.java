@@ -1,10 +1,12 @@
-package hermes.billing.faturamento;
+package hermes.billing.financeiro.faturamento;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import org.javamoney.moneta.Money;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -12,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import hermes.billing.financeiro.faturamento.Faturamento;
 import hermes.billing.financeiro.lancamento.Faturavel;
 import hermes.billing.financeiro.lancamento.Lancamento;
 import hermes.billing.financeiro.lancamento.LancamentoFaturamento;
@@ -29,9 +32,9 @@ public class FaturamentoTest {
 	
 	@Test
 	public void executa_paraFaturaveis_geraFaturamentoExtrato() {
-//		when(faturavel1.getValorFaturamento()).thenReturn(new Dinheiro(1));
-//		when(faturavel2.getValorFaturamento()).thenReturn(new Dinheiro(2));
-//		
+		when(faturavel1.getValorFaturamento()).thenReturn(Money.of(1, "BRL"));
+		when(faturavel2.getValorFaturamento()).thenReturn(Money.of(2, "BRL"));
+
 		subject.addFaturaveis(faturavel1);
 		subject.addFaturaveis(faturavel2);
 		
@@ -48,8 +51,8 @@ public class FaturamentoTest {
 		assertEquals("Faturavel 1", faturavel1,  lancamento1.getFaturavel());
 		assertEquals("Faturavel 2", faturavel2,  lancamento2.getFaturavel());
 		
-		assertEquals("Valor 1", "1,00",  lancamento1.getValor().toString());
-		assertEquals("Valor 2", "2,00",  lancamento2.getValor().toString());
+		assertEquals("Valor 1", 1,  lancamento1.getValor().getNumber().longValue());
+		assertEquals("Valor 2", 2,  lancamento2.getValor().getNumber().longValue());
 	}
 	
 	@Test
