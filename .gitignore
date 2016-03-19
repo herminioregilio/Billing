@@ -1,0 +1,6 @@
+*.prefs
+*.class
+*.lst
+target/classes/META-INF/MANIFEST.MF
+target/classes/META-INF/maven/hermes/billing/pom.properties
+target/classes/META-INF/maven/hermes/billing/pom.xml
