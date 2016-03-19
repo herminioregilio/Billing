@@ -5,17 +5,17 @@ import java.util.List;
 
 import javax.money.MonetaryAmount;
 
-import org.javamoney.moneta.Money;
-
+import hermes.billing.core.MonetaryAmountFactory;
 import hermes.billing.financeiro.lancamento.Lancamento;
 
 public class FaturamentoExtrato {
 
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	private MonetaryAmount valorAReceber;
+	private MonetaryAmountFactory monetaryAmountFactory = new MonetaryAmountFactory();
 	
 	public FaturamentoExtrato(List<Lancamento> lancamentos) {	
-		valorAReceber = Money.of(0, "BRL");
+		valorAReceber = monetaryAmountFactory.getMonetaryAmount(0);
 		for (Lancamento lancamento : lancamentos) 
 			addLancamento(lancamento);
 	}

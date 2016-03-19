@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.javamoney.moneta.Money;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import hermes.billing.financeiro.faturamento.Faturamento;
+import hermes.billing.core.MonetaryAmountFactory;
 import hermes.billing.financeiro.lancamento.Faturavel;
 import hermes.billing.financeiro.lancamento.Lancamento;
 import hermes.billing.financeiro.lancamento.LancamentoFaturamento;
@@ -23,17 +22,19 @@ import junit.framework.Assert;
 @RunWith(MockitoJUnitRunner.class)
 public class FaturamentoTest {
 
+	private Faturamento subject = new Faturamento();
+	private MonetaryAmountFactory monetary = new MonetaryAmountFactory();
+	
 	@Rule
 	public ExpectedException exception = ExpectedException.none();	
 	
-	private Faturamento subject = new Faturamento();
 	@Mock private Faturavel faturavel1;
 	@Mock private Faturavel faturavel2;
 	
 	@Test
 	public void executa_paraFaturaveis_geraFaturamentoExtrato() {
-		when(faturavel1.getValorFaturamento()).thenReturn(Money.of(1, "BRL"));
-		when(faturavel2.getValorFaturamento()).thenReturn(Money.of(2, "BRL"));
+		when(faturavel1.getValorFaturamento()).thenReturn(monetary.getMonetaryAmount(1));
+		when(faturavel2.getValorFaturamento()).thenReturn(monetary.getMonetaryAmount(2));
 
 		subject.addFaturaveis(faturavel1);
 		subject.addFaturaveis(faturavel2);
