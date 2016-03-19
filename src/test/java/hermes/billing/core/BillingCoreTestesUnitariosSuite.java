@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ MonetaryAmountTest.class })
+@SuiteClasses({ MonetaryAmountFactoryTest.class })
 public class BillingCoreTestesUnitariosSuite {
 
 }

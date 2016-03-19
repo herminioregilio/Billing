@@ -5,24 +5,28 @@ import java.util.List;
 
 import javax.money.MonetaryAmount;
 
-import hermes.billing.core.MonetaryAmountFactory;
 import hermes.billing.financeiro.lancamento.Lancamento;
 
 public class FaturamentoExtrato {
 
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	private MonetaryAmount valorAReceber;
-	private MonetaryAmountFactory monetaryAmountFactory = new MonetaryAmountFactory();
 	
 	public FaturamentoExtrato(List<Lancamento> lancamentos) {	
-		valorAReceber = monetaryAmountFactory.getMonetaryAmount(0);
 		for (Lancamento lancamento : lancamentos) 
 			addLancamento(lancamento);
 	}
 
 	public void addLancamento(Lancamento lancamento) {
 		lancamentos.add(lancamento);
-		setValorAReceber(getValorAReceber().add(lancamento.getValor()));
+		addValorAReceber(lancamento);
+	}
+
+	private void addValorAReceber(Lancamento lancamento) {
+		if(getValorAReceber() == null)
+			setValorAReceber(lancamento.getValor());
+		else
+			setValorAReceber(lancamento.getValor().add(getValorAReceber()));
 	}
 
 	public void removeLancamento(Lancamento lancamento) {

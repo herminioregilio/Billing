@@ -1,17 +1,16 @@
 package hermes.billing.core;
 
-import java.util.Locale;
-
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmounts;
 import javax.money.MonetaryCurrencies;
 
 public class MonetaryAmountFactory {
+	private static final String BRL = "BRL";
 	private CurrencyUnit currency;
 
 	public MonetaryAmountFactory(){
-		setCurrency(MonetaryCurrencies.getCurrency(Locale.getDefault()));
+		setCurrency(MonetaryCurrencies.getCurrency(BRL));
 	}
 	
 	public MonetaryAmount getMonetaryAmount(Number valor) {
