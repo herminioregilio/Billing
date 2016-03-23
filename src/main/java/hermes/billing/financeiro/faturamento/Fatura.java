@@ -7,12 +7,12 @@ import javax.money.MonetaryAmount;
 
 import hermes.billing.financeiro.lancamento.Lancamento;
 
-public class FaturamentoExtrato {
+public class Fatura {
 
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	private MonetaryAmount valorAReceber;
 	
-	public FaturamentoExtrato(List<Lancamento> lancamentos) {	
+	public Fatura(List<Lancamento> lancamentos) {	
 		for (Lancamento lancamento : lancamentos) 
 			addLancamento(lancamento);
 	}

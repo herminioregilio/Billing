@@ -15,7 +15,7 @@ import hermes.billing.financeiro.lancamento.Lancamento;
 import junit.framework.Assert;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FaturamentoExtratoTest {
+public class FaturaTest {
 
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	private MonetaryAmountFactory monetary = new MonetaryAmountFactory();
@@ -42,20 +42,20 @@ public class FaturamentoExtratoTest {
 
 	@Test
 	public void removeLancamento_atualizaValorAReceber() {
-		FaturamentoExtrato subject = faturamentoExtrato1Add2();
+		Fatura subject = faturamentoExtrato1Add2();
 
 		subject.removeLancamento(lancamento1);
 		Assert.assertEquals("Valor", 2, subject.getValorAReceber().getNumber().longValue());
 	}
 
-	private FaturamentoExtrato faturamentoExtratoDe1() {
-		FaturamentoExtrato subject = new FaturamentoExtrato(lancamentos);
+	private Fatura faturamentoExtratoDe1() {
+		Fatura subject = new Fatura(lancamentos);
 		Assert.assertEquals("Valor", 1, subject.getValorAReceber().getNumber().longValue());
 		return subject;
 	}
 	
-	private FaturamentoExtrato faturamentoExtrato1Add2() {
-		FaturamentoExtrato subject = faturamentoExtratoDe1();
+	private Fatura faturamentoExtrato1Add2() {
+		Fatura subject = faturamentoExtratoDe1();
 		
 		subject.addLancamento(lancamento2);
 		Assert.assertEquals("Valor", 3, subject.getValorAReceber().getNumber().longValue());

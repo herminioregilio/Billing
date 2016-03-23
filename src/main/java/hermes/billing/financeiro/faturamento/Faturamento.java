@@ -3,24 +3,23 @@ package hermes.billing.financeiro.faturamento;
 import java.util.ArrayList;
 import java.util.List;
 
-import hermes.billing.financeiro.lancamento.Faturavel;
 import hermes.billing.financeiro.lancamento.Lancamento;
-import hermes.billing.financeiro.lancamento.LancamentoFaturamento;
 
 public class Faturamento {
 	private static final String NÃO_É_POSSÍVEL_EXECUTAR_UM_FATURAMENTO_MAIS_DE_UMA_VEZ = "Não é possível executar um Faturamento mais de uma vez.";
-	List<Faturavel> faturaveis = new ArrayList<Faturavel>();
-	private FaturamentoExtrato faturamentoExtrato;
+	private Faturavel faturavel;
+	private Fatura fatura;
 	private boolean isExecutado;
 	
-	public void executa() {
+	public void executa(Faturavel faturavel) {
 		validaExecucao();
+		setFaturavel(faturavel);
 		setExecutado();
 		
 		List<Lancamento> lancamentos = geraLancamentos();
 		if(lancamentos.isEmpty())
 			return;
-		faturamentoExtrato = new FaturamentoExtrato(lancamentos);
+		fatura = new Fatura(lancamentos);
 	}
 
 	private void validaExecucao() {
@@ -38,7 +37,7 @@ public class Faturamento {
 
 	private List<Lancamento> geraLancamentos() {
 		List<Lancamento> lancamentos = new ArrayList<Lancamento>();
-		for (Faturavel faturavel : faturaveis) {
+		for (FaturavelItem faturavel : getFaturavel().getItensFaturaveis()) {
 			LancamentoFaturamento lancamento = new LancamentoFaturamento();
 			lancamento.setFaturavel(faturavel);
 			lancamento.setValor(faturavel.getValorFaturamento());
@@ -47,12 +46,16 @@ public class Faturamento {
 		return lancamentos;
 	}
 
-	void addFaturaveis(Faturavel faturavel) {
-		faturaveis.add(faturavel);
+	public Fatura getFatura() {
+		return fatura;
 	}
 
-	public FaturamentoExtrato getFaturamentoExtrato() {
-		return faturamentoExtrato;
+	public Faturavel getFaturavel() {
+		return faturavel;
+	}
+
+	private void setFaturavel(Faturavel faturavel) {
+		this.faturavel = faturavel;
 	}
 
 }

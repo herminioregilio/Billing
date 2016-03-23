@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ FaturamentoExtratoTest.class, FaturamentoTest.class })
+@SuiteClasses({ FaturaTest.class, FaturamentoTest.class })
 public class FaturamentoTestesUnitariosSuite {
 
 }

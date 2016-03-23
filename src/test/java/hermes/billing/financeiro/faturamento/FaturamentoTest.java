@@ -4,6 +4,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Rule;
@@ -14,9 +15,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hermes.billing.core.MonetaryAmountFactory;
-import hermes.billing.financeiro.lancamento.Faturavel;
 import hermes.billing.financeiro.lancamento.Lancamento;
-import hermes.billing.financeiro.lancamento.LancamentoFaturamento;
 import junit.framework.Assert;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,38 +27,37 @@ public class FaturamentoTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();	
 	
-	@Mock private Faturavel faturavel1;
-	@Mock private Faturavel faturavel2;
+	@Mock private FaturavelItem itemFaturavel1;
+	@Mock private FaturavelItem itemFaturavel2;
+	@Mock private Faturavel faturavel;
 	
 	@Test
-	public void executa_paraFaturaveis_geraFaturamentoExtrato() {
-		when(faturavel1.getValorFaturamento()).thenReturn(monetary.getMonetaryAmount(1));
-		when(faturavel2.getValorFaturamento()).thenReturn(monetary.getMonetaryAmount(2));
+	public void executa_paraFaturavelComDoisItens_geraFatura() {
+		when(itemFaturavel1.getValorFaturamento()).thenReturn(monetary.getMonetaryAmount(1));
+		when(itemFaturavel2.getValorFaturamento()).thenReturn(monetary.getMonetaryAmount(2));
+		when(faturavel.getItensFaturaveis()).thenReturn(Arrays.asList(itemFaturavel1, itemFaturavel2));
 
-		subject.addFaturaveis(faturavel1);
-		subject.addFaturaveis(faturavel2);
+		subject.executa(faturavel);
 		
-		subject.executa();
+		assertNotNull("fatura", subject.getFatura());
 		
-		assertNotNull("extrato", subject.getFaturamentoExtrato());
-		
-		List<Lancamento> lancamentos = subject.getFaturamentoExtrato().getLancamentos();
+		List<Lancamento> lancamentos = subject.getFatura().getLancamentos();
 		assertEquals("lançamentos", 2, lancamentos.size());
 		
 		LancamentoFaturamento lancamento1 = (LancamentoFaturamento) lancamentos.get(0);
 		LancamentoFaturamento lancamento2 = (LancamentoFaturamento) lancamentos.get(1);
 		
-		assertEquals("Faturavel 1", faturavel1,  lancamento1.getFaturavel());
-		assertEquals("Faturavel 2", faturavel2,  lancamento2.getFaturavel());
+		assertEquals("Item Faturavel 1", itemFaturavel1,  lancamento1.getFaturavel());
+		assertEquals("Item Faturavel 2", itemFaturavel2,  lancamento2.getFaturavel());
 		
 		assertEquals("Valor 1", 1,  lancamento1.getValor().getNumber().longValue());
 		assertEquals("Valor 2", 2,  lancamento2.getValor().getNumber().longValue());
 	}
 	
 	@Test
-	public void executa_paraFaturaveis_NaoGeraFaturamentoExtrato() {
-		subject.executa();
-		Assert.assertNull("extrato", subject.getFaturamentoExtrato());
+	public void executa_paraFaturavel_NaoGeraFatura() {
+		subject.executa(faturavel);
+		Assert.assertNull("extrato", subject.getFatura());
 	}
 
 	@Test
@@ -67,8 +65,8 @@ public class FaturamentoTest {
 		exception.expect(RuntimeException.class);
 		exception.expectMessage("Não é possível executar um Faturamento mais de uma vez.");
 
-		subject.executa();
-		subject.executa();
+		subject.executa(faturavel);
+		subject.executa(faturavel);
 	}
 	
 }

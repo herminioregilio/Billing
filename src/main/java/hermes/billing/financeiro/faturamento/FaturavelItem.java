@@ -1,8 +1,8 @@
-package hermes.billing.financeiro.lancamento;
+package hermes.billing.financeiro.faturamento;
 
 import javax.money.MonetaryAmount;
 
-public interface Faturavel {
+public interface FaturavelItem {
 
 	MonetaryAmount getValorFaturamento();
 
