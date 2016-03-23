@@ -16,10 +16,29 @@ public class Faturamento {
 		setFaturavel(faturavel);
 		setExecutado();
 		
-		List<Lancamento> lancamentos = geraLancamentos();
+		geraFatura(geraLancamentos());
+	}
+
+	private List<Lancamento> geraLancamentos() {
+		List<Lancamento> lancamentos = new ArrayList<Lancamento>();
+		for (FaturavelItem faturavel : getFaturavel().getItensFaturaveis()) {
+			LancamentoFaturamento lancamento = new LancamentoFaturamento();
+			lancamento.setFaturavel(faturavel);
+			lancamento.setValor(faturavel.getValorFaturamento());
+			lancamentos.add(lancamento);
+		}
+		return lancamentos;
+	}
+	
+	private void geraFatura(List<Lancamento> lancamentos) {
 		if(lancamentos.isEmpty())
 			return;
-		fatura = new Fatura(lancamentos);
+		setFatura(new Fatura(lancamentos));
+		getFatura().setContaFinanceira(getFaturavel().getContaFinanceira());
+	}
+
+	private void setFatura(Fatura fatura) {
+		this.fatura = fatura;
 	}
 
 	private void validaExecucao() {
@@ -35,17 +54,6 @@ public class Faturamento {
 		isExecutado = true;
 	}
 
-	private List<Lancamento> geraLancamentos() {
-		List<Lancamento> lancamentos = new ArrayList<Lancamento>();
-		for (FaturavelItem faturavel : getFaturavel().getItensFaturaveis()) {
-			LancamentoFaturamento lancamento = new LancamentoFaturamento();
-			lancamento.setFaturavel(faturavel);
-			lancamento.setValor(faturavel.getValorFaturamento());
-			lancamentos.add(lancamento);
-		}
-		return lancamentos;
-	}
-
 	public Fatura getFatura() {
 		return fatura;
 	}
@@ -57,5 +65,4 @@ public class Faturamento {
 	private void setFaturavel(Faturavel faturavel) {
 		this.faturavel = faturavel;
 	}
-
 }

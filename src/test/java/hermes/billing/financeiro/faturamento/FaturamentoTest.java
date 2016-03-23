@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hermes.billing.core.MonetaryAmountFactory;
+import hermes.billing.financeiro.ContaFinanceira;
 import hermes.billing.financeiro.lancamento.Lancamento;
 import junit.framework.Assert;
 
@@ -30,16 +31,19 @@ public class FaturamentoTest {
 	@Mock private FaturavelItem itemFaturavel1;
 	@Mock private FaturavelItem itemFaturavel2;
 	@Mock private Faturavel faturavel;
+	@Mock private ContaFinanceira contaFinanceira;
 	
 	@Test
 	public void executa_paraFaturavelComDoisItens_geraFatura() {
 		when(itemFaturavel1.getValorFaturamento()).thenReturn(monetary.getMonetaryAmount(1));
 		when(itemFaturavel2.getValorFaturamento()).thenReturn(monetary.getMonetaryAmount(2));
 		when(faturavel.getItensFaturaveis()).thenReturn(Arrays.asList(itemFaturavel1, itemFaturavel2));
+		when(faturavel.getContaFinanceira()).thenReturn(contaFinanceira);
 
 		subject.executa(faturavel);
 		
 		assertNotNull("fatura", subject.getFatura());
+		assertEquals("conta financeira", contaFinanceira, subject.getFatura().getContaFinanceira());
 		
 		List<Lancamento> lancamentos = subject.getFatura().getLancamentos();
 		assertEquals("lançamentos", 2, lancamentos.size());
