@@ -10,6 +10,9 @@ public abstract class Lancamento {
 	}
 
 	public void setValor(MonetaryAmount valor) {
+		validaValor(valor);
 		this.valor = valor;
 	}
+
+	protected void validaValor(MonetaryAmount valor) {}
 }

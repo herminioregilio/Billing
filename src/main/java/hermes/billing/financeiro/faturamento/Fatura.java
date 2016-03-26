@@ -10,6 +10,7 @@ import hermes.billing.financeiro.lancamento.Lancamento;
 
 public class Fatura {
 
+	static final String MSG_ERRO_VALOR_A_RECEBER_NEGATIVO = "O valor a receber de uma fatura não pode ser negativo.";
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	private MonetaryAmount valorAReceber;
 	private ContaFinanceira contaFinanceira;
@@ -37,7 +38,13 @@ public class Fatura {
 	}
 	
 	private void setValorAReceber(MonetaryAmount valor) {
+		validaValorAReceber(valor);
 		this.valorAReceber = valor;
+	}
+
+	protected void validaValorAReceber(MonetaryAmount valor) {
+		if(valor.isNegative())
+			throw new RuntimeException(MSG_ERRO_VALOR_A_RECEBER_NEGATIVO);
 	}
 
 	public List<Lancamento> getLancamentos() {
