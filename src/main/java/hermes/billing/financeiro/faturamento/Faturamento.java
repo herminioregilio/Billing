@@ -3,28 +3,20 @@ package hermes.billing.financeiro.faturamento;
 import java.util.ArrayList;
 import java.util.List;
 
-import hermes.billing.financeiro.cobranca.MeioDeCobranca;
-import hermes.billing.financeiro.faturamento.cobranca.FaturamentoCobrancaFactory;
 import hermes.billing.financeiro.lancamento.Lancamento;
 
 public class Faturamento {
 	private static final String NÃO_É_POSSÍVEL_EXECUTAR_UM_FATURAMENTO_MAIS_DE_UMA_VEZ = "Não é possível executar um Faturamento mais de uma vez.";
 	private Faturavel faturavel;
 	private Fatura fatura;
-	private FaturamentoCobrancaFactory cobrancaFactory;
 	private boolean isExecutado;
 
-	public Faturamento() {
-		setCobrancaFactory(new FaturamentoCobrancaFactory(this));
-	}
-	
 	public void executa(Faturavel faturavel) {
 		validaExecucao();
 		setFaturavel(faturavel);
 		setExecutado();
 
 		geraFatura(geraLancamentos());
-		getCobrancaFactory().cobra();
 	}
 
 	private List<Lancamento> geraLancamentos() {
@@ -74,15 +66,4 @@ public class Faturamento {
 		this.faturavel = faturavel;
 	}
 
-	private FaturamentoCobrancaFactory getCobrancaFactory() {
-		return cobrancaFactory;
-	}
-
-	protected void setCobrancaFactory(FaturamentoCobrancaFactory cobrancaStrategy) {
-		this.cobrancaFactory = cobrancaStrategy;
-	}
-
-	public MeioDeCobranca getMeioDeCobranca() {
-		return getFaturavel().getMeioDeCobranca();
-	}
 }

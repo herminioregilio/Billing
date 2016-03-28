@@ -7,18 +7,15 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import hermes.billing.core.MonetaryAmountFactory;
 import hermes.billing.financeiro.ContaFinanceira;
-import hermes.billing.financeiro.faturamento.cobranca.FaturamentoCobrancaFactory;
 import hermes.billing.financeiro.lancamento.Lancamento;
 import junit.framework.Assert;
 
@@ -35,13 +32,6 @@ public class FaturamentoTest {
 	@Mock private FaturavelItem itemFaturavel2;
 	@Mock private Faturavel faturavel;
 	@Mock private ContaFinanceira contaFinanceira;
-	@Mock private FaturamentoCobrancaFactory cobrancaStrategy;
-	
-
-	@Before
-	public void setup() {
-		subject.setCobrancaFactory(cobrancaStrategy);
-	}
 	
 	@Test
 	public void executa_paraFaturavelComDoisItens_geraFatura() {
@@ -72,12 +62,6 @@ public class FaturamentoTest {
 		subject.executa(faturavel);
 	}
 
-	@Test
-	public void executa_geraCobranca() {
-		executaFaturamentoParaFaturavelComDoisItens();
-		Mockito.verify(cobrancaStrategy, Mockito.times(1)).cobra();
-	}
-	
 	@Test
 	public void executa_paraFaturavel_NaoGeraFatura() {
 		subject.executa(faturavel);
