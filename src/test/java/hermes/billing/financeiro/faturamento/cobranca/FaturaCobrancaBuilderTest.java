@@ -26,10 +26,10 @@ public class FaturaCobrancaBuilderTest {
 	}
 	
 	@Test
-	public void cobra() {
+	public void build() {
 		when(faturamento.getFatura()).thenReturn(fatura);
 
-		FaturaCobranca faturaCobranca = (FaturaCobranca) subject.cobra();
+		FaturaCobranca faturaCobranca = (FaturaCobranca) subject.build();
 		assertNotNull(faturaCobranca);
 		
 		assertEquals("Fatura", fatura, faturaCobranca.getFatura());

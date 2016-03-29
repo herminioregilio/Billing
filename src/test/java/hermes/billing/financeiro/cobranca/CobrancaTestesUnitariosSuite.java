@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({CobrancaBuilderTest.class})
+@SuiteClasses({OperacaoBuilderTest.class})
 public class CobrancaTestesUnitariosSuite {
 
 }
